@@ -23,8 +23,9 @@ int main(int argc, char **argv){
     while(!feof(fin)){
         ch = fgetc(fin);
         //if(ch != '\n'){
-            parse(ch);
-            printf("%c ", ch);
+            if(parse(ch) == 0)
+                break;
+           // printf("%c ", ch);
 
        // }
         //else {
@@ -32,7 +33,7 @@ int main(int argc, char **argv){
          //   continue;
         //}
     }
-    printf("-------------------------------------------------------------------------------------\n\n");
-    print_state(&at_data);
+   // printf("-------------------------------------------------------------------------------------\n\n");
+    //print_state(&at_data);
     return 0;
 }
