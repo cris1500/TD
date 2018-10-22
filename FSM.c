@@ -11,11 +11,10 @@ uint8_t i;
 // TO DO: salvare in at_data -> data
 int parse(char current_char) {
 	static uint16_t state = 0;
-        
 	switch (state) {
 		case 0: 
 			if (current_char == 13){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 1;
                                 at_data.data[at_data.line_count][i++]=current_char;
                                 //printf("Starea %d %c\n", state, current_char);
@@ -26,10 +25,12 @@ int parse(char current_char) {
 
 		case 1: 
 			if (current_char == 10){
-				printf("Starea %d %c\n", state, current_char);
+				//printf("Starea %d %c\n", state, current_char);
                                 state = 2;
                                 at_data.data[at_data.line_count][i++] = current_char;
-                                at_data.line_count++; //urmeaza \n dupa <CR><LF> si se ignora
+                                at_data.data[at_data.line_count][i] = '\0';
+                                at_data.line_count++;
+                                i = 0;//urmeaza \n dupa <CR><LF> si se ignora
                                 //printf("Starea %d %c\n", state, current_char);
                         }
 			else
@@ -39,20 +40,21 @@ int parse(char current_char) {
 
 		case 2:
 			if (current_char == 'O'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 3;
                                 at_data.data[at_data.line_count][i++] = current_char;
                                 
                         }
 			else if (current_char == 'E'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 7;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
 			else if (current_char == '+'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 11;
                                 at_data.data[at_data.line_count][i++] = current_char;
+                                //printf("%c\n", at_data.data[at_data.line_count][i++]);
                         }
 			else 
 				state = 17;
@@ -60,9 +62,10 @@ int parse(char current_char) {
 
 		case 3:
 			if (current_char == 'K'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 4;
-                                at_data.data[at_data.line_count][i++] = current_char;
+                                at_data.data[at_data.line_count][i] = current_char;
+                                //printf("%c\n", at_data.data[at_data.line_count][i++]);
                         }
 			else 
 				state = 17;
@@ -70,7 +73,7 @@ int parse(char current_char) {
 
 		case 4:
 			if (current_char == 13){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 5;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -80,9 +83,10 @@ int parse(char current_char) {
 
 		case 5: 
 			if (current_char == 10){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 6;
                                 at_data.data[at_data.line_count][i++] = current_char;
+                                
                         }
 			else
 				state = 17;
@@ -90,11 +94,13 @@ int parse(char current_char) {
 
 		case 6:
                         printf("TOTUL E OK\n");
+                        at_data.data[at_data.line_count][i] = '\0';
+                        print_state(&at_data);
 			return 1; //totul e ok(stare finala)
 		
 		case 7: 
 			if (current_char == 'R'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 8;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -103,7 +109,7 @@ int parse(char current_char) {
 
 		case 8: 
 			if (current_char == 'R'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 9;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -112,7 +118,7 @@ int parse(char current_char) {
 
 		case 9: 
 			if (current_char == 'O'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 10;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -121,7 +127,7 @@ int parse(char current_char) {
 
 		case 10: 
 			if (current_char == 'R'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 4;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -130,7 +136,7 @@ int parse(char current_char) {
 
 		case 11:
 			if (current_char != 13) {
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 12;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -139,12 +145,12 @@ int parse(char current_char) {
 
 		case 12: 
 			if (current_char == 13){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 13;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
 			else if (current_char != 13){
-                            printf("Starea %d %c\n", state, current_char);
+                            //printf("Starea %d %c\n", state, current_char);
                             state = 12;
                             at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -152,9 +158,11 @@ int parse(char current_char) {
 
 		case 13: 
 			if (current_char == 10){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 14;
                                 at_data.data[at_data.line_count][i++] = current_char;
+                                at_data.data[at_data.line_count][i] = '\0';
+                                i=0;
                                 at_data.line_count++;
                         }
 			else state = 17;
@@ -162,12 +170,12 @@ int parse(char current_char) {
 
 		case 14:
 			if (current_char == 13){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 15;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
 			else if (current_char == '+'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 11;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -176,22 +184,24 @@ int parse(char current_char) {
 
 		case 15: 
 			if (current_char == 10){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 16;
                                 at_data.data[at_data.line_count][i++] = current_char;
+                                at_data.data[at_data.line_count][i] = '\0';
                                 at_data.line_count++;
+                                i=0;
                         }
 			else state = 17;
 			break;
 
 		case 16: 
 			if (current_char == 'O'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 3;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
 			else if (current_char == 'E'){
-                                printf("Starea %d %c\n", state, current_char);
+                                //printf("Starea %d %c\n", state, current_char);
 				state = 7;
                                 at_data.data[at_data.line_count][i++] = current_char;
                         }
@@ -199,15 +209,16 @@ int parse(char current_char) {
 			break;
 
 		case 17: 
-                    printf("UNDEVA E O EROARE \n");
-			return 0; //eroare
+                    printf("La linia %d e o eroare \n", at_data.line_count);
+                    print_state(&at_data);
+                    return 0; //eroare
 	}
 	
 }
 
-void print_state(AT * at_data) {
+void print_state(AT* at_data) {
 	uint16_t i;
-	for (i = 0; i < at_data->line_count; ++i) {
-		printf("%s %d\n", at_data->data[i], at_data->line_count);
+	for (i = 0; i < at_data->line_count; i++) {
+		printf("%s", at_data->data[i]);
 	}
 }
