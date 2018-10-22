@@ -205,9 +205,9 @@ int parse(char current_char) {
 	
 }
 
-void print_state() {
+void print_state(AT * at_data) {
 	uint16_t i;
-	for (i = 0; i < at_data.line_count; ++i) {
-		printf("%s %d\n", at_data.data[i], at_data.line_count);
+	for (i = 0; i < at_data->line_count; ++i) {
+		printf("%s %d\n", at_data->data[i], at_data->line_count);
 	}
 }
