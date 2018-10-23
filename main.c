@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include "FSM.h"
 
 extern AT at_data;
@@ -22,18 +23,9 @@ int main(int argc, char **argv){
     
     while(!feof(fin)){
         ch = fgetc(fin);
-        //if(ch != '\n'){
-            if(parse(ch) == 0)
-                break;
-           // printf("%c ", ch);
-
-       // }
-        //else {
-         //   printf("%c", ch);
-         //   continue;
-        //}
+        if(parse(ch) == 0)
+            break;
     }
-   // printf("-------------------------------------------------------------------------------------\n\n");
-    //print_state(&at_data);
+    
     return 0;
 }
