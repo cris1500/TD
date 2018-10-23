@@ -4,7 +4,7 @@
 #include<stdint.h>
 #include<stdbool.h>
 
-#define MAX_LINE_COUNT 30
+#define MAX_LINE_COUNT 1000
 #define STR_SIZE 50
 
 typedef struct FSM {
